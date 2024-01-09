@@ -14,24 +14,29 @@ public class Setting {
     static int keyLEFT;
     static int keyRIGHT;
 
-    public Setting() {
+    static String settingsFile = "Resource" + File.separator + "settings";
+
+    public static void init() {
         CELL_SIZE = 30;
         playSound = true;
         keyUP = KeyEvent.VK_UP;
         keyDOWN = KeyEvent.VK_DOWN;
         keyLEFT = KeyEvent.VK_LEFT;
         keyRIGHT = KeyEvent.VK_RIGHT;
-        lsSize = new ArrayList<Integer>();
+        lsSize = new ArrayList<>();
         lsSize.add(22);
         lsSize.add(30);
         lsSize.add(38);
     }
 
-    public static void save(){
-        File file = new File("D:\\Учеба\\P java\\KR-Snake\\Resource\\setting.txt");
+    public static void save() {
+        File file = new File(settingsFile);
         try {
             if (!file.exists()) {
-                file.createNewFile();
+                boolean flag = file.createNewFile();
+                if (!flag) {
+                    throw new Exception();
+                }
             }
             PrintStream out = new PrintStream(file);
             out.println(CELL_SIZE);
@@ -41,11 +46,12 @@ public class Setting {
             out.println(keyLEFT);
             out.println(keyRIGHT);
             out.close();
-        }catch(Exception ex){}
+        } catch (Exception ignored) {
+        }
     }
 
-    public static void load() throws Exception{
-        File file = new File("D:\\Учеба\\P java\\KR-Snake\\Resource\\setting.txt");
+    public static void load() throws Exception {
+        File file = new File(settingsFile);
         if (file.exists()) {
             Scanner cin = new Scanner(file);
             CELL_SIZE = Integer.parseInt(cin.nextLine().replaceAll(" ", ""));

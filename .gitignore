@@ -1,0 +1,9 @@
+.idea
+
+out/*
+!out/.gitkeep
+
+Resource/save
+Resource/score
+Resource/setting.txt
+Resource/settings

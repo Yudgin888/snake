@@ -3,9 +3,9 @@ import java.awt.*;
 import java.awt.event.*;
 
 
-public class OverScene extends SuperScene{
-    private int score;
-    private double time;
+public class OverScene extends SuperScene {
+    private final int score;
+    private final double time;
     public int numScene;
     private int dialog;
 
@@ -21,9 +21,9 @@ public class OverScene extends SuperScene{
     public void update(long nanosPassed) {
         for (KeyEvent event : CreateGame.getGame().getInput().getKeyEvents()) {
             if (event.getKeyCode() == KeyEvent.VK_ENTER) {
-                if(numScene == 1) {
+                if (numScene == 1) {
                     CreateGame.setNextScene();
-                }else{
+                } else {
                     CreateGame.getGame().setScene(new MainMenu());
                     CreateGame.playMusic(1);
                 }
@@ -36,62 +36,62 @@ public class OverScene extends SuperScene{
     }
 
     public void draw(Graphics2D g) {
-        if(numScene == 1) {
+        if (numScene == 1) {
             g.drawImage(Resource.bGroundOv, 0, 0, CreateGame.getGame().getWidth(), CreateGame.getGame().getHeight(), null);
-            g.setFont(new Font("Arial", Font.ROMAN_BASELINE, Setting.CELL_SIZE - Setting.CELL_SIZE/6));
+            g.setFont(new Font("Arial", Font.PLAIN, Setting.CELL_SIZE - Setting.CELL_SIZE / 6));
             g.drawString("Вы завершили " + (CreateGame.getCurrLvl() + 1) + " уровень!", Setting.CELL_SIZE * 8 + Setting.CELL_SIZE / 4, Setting.CELL_SIZE * 7 + Setting.CELL_SIZE / 2);
 
-            g.setFont(new Font("Arial", Font.ROMAN_BASELINE, Setting.CELL_SIZE - Setting.CELL_SIZE/6));
+            g.setFont(new Font("Arial", Font.PLAIN, Setting.CELL_SIZE - Setting.CELL_SIZE / 6));
             g.drawString("Результат:", Setting.CELL_SIZE * 11 + Setting.CELL_SIZE / 4, Setting.CELL_SIZE * 9 + Setting.CELL_SIZE / 2);
 
-            g.setFont(new Font("Arial", Font.ROMAN_BASELINE, Setting.CELL_SIZE - Setting.CELL_SIZE/6));
-            g.drawString("Время: " + (int)time + "c", Setting.CELL_SIZE * 9, Setting.CELL_SIZE * 11);
+            g.setFont(new Font("Arial", Font.PLAIN, Setting.CELL_SIZE - Setting.CELL_SIZE / 6));
+            g.drawString("Время: " + (int) time + "c", Setting.CELL_SIZE * 9, Setting.CELL_SIZE * 11);
 
-            g.setFont(new Font("Arial", Font.ROMAN_BASELINE, Setting.CELL_SIZE - Setting.CELL_SIZE/6));
+            g.setFont(new Font("Arial", Font.PLAIN, Setting.CELL_SIZE - Setting.CELL_SIZE / 6));
             g.drawString("Набрано очков: " + score, Setting.CELL_SIZE * 9, Setting.CELL_SIZE * 12);
 
-            g.setFont(new Font("Arial", Font.ROMAN_BASELINE, Setting.CELL_SIZE/2));
-            g.drawString("Для продолжения нажмите Enter", Setting.CELL_SIZE * 9 + Setting.CELL_SIZE/2, Setting.CELL_SIZE * 16);
+            g.setFont(new Font("Arial", Font.PLAIN, Setting.CELL_SIZE / 2));
+            g.drawString("Для продолжения нажмите Enter", Setting.CELL_SIZE * 9 + Setting.CELL_SIZE / 2, Setting.CELL_SIZE * 16);
         }
-        if(numScene == 2){
+        if (numScene == 2) {
             g.drawImage(Resource.bFin, 0, 0, CreateGame.getGame().getWidth(), CreateGame.getGame().getHeight(), null);
             g.setColor(Color.BLACK);
-            g.setFont(new Font("Arial", Font.ROMAN_BASELINE, Setting.CELL_SIZE - Setting.CELL_SIZE/6));
-            g.drawString("Общее время: " + (int)time + "c", Setting.CELL_SIZE * 9, Setting.CELL_SIZE * 2);
+            g.setFont(new Font("Arial", Font.PLAIN, Setting.CELL_SIZE - Setting.CELL_SIZE / 6));
+            g.drawString("Общее время: " + (int) time + "c", Setting.CELL_SIZE * 9, Setting.CELL_SIZE * 2);
 
-            g.setFont(new Font("Arial", Font.ROMAN_BASELINE, Setting.CELL_SIZE - Setting.CELL_SIZE/6));
-            g.drawString("Всего набрано очков: " + score, Setting.CELL_SIZE * 9, Setting.CELL_SIZE * 3 + Setting.CELL_SIZE/2);
-            if(dialog < 3)
+            g.setFont(new Font("Arial", Font.PLAIN, Setting.CELL_SIZE - Setting.CELL_SIZE / 6));
+            g.drawString("Всего набрано очков: " + score, Setting.CELL_SIZE * 9, Setting.CELL_SIZE * 3 + Setting.CELL_SIZE / 2);
+            if (dialog < 3)
                 dialog++;
-            if(dialog == 2) {
+            if (dialog == 2) {
                 new SaveDialog();
             }
         }
-        if(numScene == 3){
+        if (numScene == 3) {
             g.drawImage(Resource.gameOver, 0, 0, CreateGame.getGame().getWidth(), CreateGame.getGame().getHeight(), null);
             g.setColor(Color.WHITE);
-            g.setFont(new Font("Arial", Font.ROMAN_BASELINE, Setting.CELL_SIZE - Setting.CELL_SIZE/6));
-            g.drawString("Общее время: " + (int)CreateGame.time + "c", Setting.CELL_SIZE * 9, Setting.CELL_SIZE * 2);
+            g.setFont(new Font("Arial", Font.PLAIN, Setting.CELL_SIZE - Setting.CELL_SIZE / 6));
+            g.drawString("Общее время: " + (int) CreateGame.time + "c", Setting.CELL_SIZE * 9, Setting.CELL_SIZE * 2);
 
-            g.setFont(new Font("Arial", Font.ROMAN_BASELINE, Setting.CELL_SIZE - Setting.CELL_SIZE/6));
-            g.drawString("Всего набрано очков: " + CreateGame.score, Setting.CELL_SIZE * 9, Setting.CELL_SIZE * 3 + Setting.CELL_SIZE/2);
-            if(dialog < 3)
+            g.setFont(new Font("Arial", Font.PLAIN, Setting.CELL_SIZE - Setting.CELL_SIZE / 6));
+            g.drawString("Всего набрано очков: " + CreateGame.score, Setting.CELL_SIZE * 9, Setting.CELL_SIZE * 3 + Setting.CELL_SIZE / 2);
+            if (dialog < 3)
                 dialog++;
-            if(dialog == 2) {
+            if (dialog == 2) {
                 new SaveDialog();
             }
         }
     }
 
-    public void click(int x, int y){
+    public void click(int x, int y) {
     }
 
 }
 
 
-class SaveDialog extends JDialog{
+class SaveDialog extends JDialog {
 
-    public SaveDialog(){
+    public SaveDialog() {
         super(new JFrame(), true);
         setIconImage(Resource.icon);
         setResizable(false);
@@ -106,7 +106,7 @@ class SaveDialog extends JDialog{
         JPanel pan1 = new JPanel();
         pan1.setOpaque(false);
         JLabel label = new JLabel("Для сохранения результата введите имя:");
-        label.setFont(new Font("Arial", Font.ROMAN_BASELINE, Setting.CELL_SIZE/3));
+        label.setFont(new Font("Arial", Font.PLAIN, Setting.CELL_SIZE / 3));
         pan1.add(label);
 
         final JTextField txt = new JTextField(10);
@@ -135,11 +135,7 @@ class SaveDialog extends JDialog{
                 } else {
                     str = txt.getText() + e.getKeyChar();
                 }
-                if (str.length() > 0) {
-                    but.setEnabled(true);
-                } else {
-                    but.setEnabled(false);
-                }
+                but.setEnabled(str.length() > 0);
             }
         });
 
@@ -147,10 +143,10 @@ class SaveDialog extends JDialog{
             @Override
             public void actionPerformed(ActionEvent e) {
                 String str_tmp = txt.getText();
-                if(str_tmp.length() > 10){
+                if (str_tmp.length() > 10) {
                     str_tmp = str_tmp.substring(0, 9);
                 }
-                String []str = {str_tmp, String.valueOf(CreateGame.score), String.valueOf((int)CreateGame.time) + " c"};
+                String[] str = {str_tmp, String.valueOf(CreateGame.score), String.valueOf((int) CreateGame.time) + " c"};
                 CreateGame.lsScore.add(str);
                 dispose();
                 CreateGame.getGame().setScene(new MainMenu());
@@ -167,7 +163,7 @@ class SaveDialog extends JDialog{
         addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
-                if(e.getKeyCode() == 27){
+                if (e.getKeyCode() == 27) {
                     dispose();
                     CreateGame.getGame().setScene(new MainMenu());
                     CreateGame.playMusic(1);
@@ -178,5 +174,4 @@ class SaveDialog extends JDialog{
         setFocusable(true);
         setVisible(true);
     }
-
 }

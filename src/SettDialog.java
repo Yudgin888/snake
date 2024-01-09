@@ -28,7 +28,7 @@ public class SettDialog extends JDialog {
         JButton can = new JButton("Отмена");
 
         JLabel lSound = new JLabel("Звук");
-        lSound.setFont(new Font("Arial", Font.ROMAN_BASELINE, Setting.CELL_SIZE/2));
+        lSound.setFont(new Font("Arial", Font.PLAIN, Setting.CELL_SIZE / 2));
         ButtonGroup group = new ButtonGroup();
         final JCheckBox v1 = new JCheckBox("вкл");
         final JCheckBox v2 = new JCheckBox("выкл");
@@ -39,17 +39,13 @@ public class SettDialog extends JDialog {
         v1.setSelected(Setting.playSound);
         v1.addItemListener(new ItemListener() {
             public void itemStateChanged(ItemEvent e) {
-                if (sound) {
-                    sound = false;
-                } else {
-                    sound = true;
-                }
+                sound = !sound;
             }
         });
         v2.setSelected(!Setting.playSound);
 
         JLabel lSize = new JLabel("Размер окна");
-        lSize.setFont(new Font("Arial", Font.ROMAN_BASELINE, Setting.CELL_SIZE/2));
+        lSize.setFont(new Font("Arial", Font.PLAIN, Setting.CELL_SIZE / 2));
         final Choice chSize = new Choice();
         for (Integer i : Setting.lsSize) {
             chSize.add(i * Setting.WORLD_WIDTH + "x" + i * Setting.WORLD_HEIGHT);
@@ -57,15 +53,15 @@ public class SettDialog extends JDialog {
         chSize.select(Setting.CELL_SIZE * Setting.WORLD_WIDTH + "x" + Setting.CELL_SIZE * Setting.WORLD_HEIGHT);
 
         JLabel lDir = new JLabel("Управление:");
-        lSize.setFont(new Font("Arial", Font.ROMAN_BASELINE, Setting.CELL_SIZE - 10));
+        lSize.setFont(new Font("Arial", Font.PLAIN, Setting.CELL_SIZE - 10));
         JLabel lUp = new JLabel("Вверх");
-        lSize.setFont(new Font("Arial", Font.ROMAN_BASELINE, Setting.CELL_SIZE - 10));
+        lSize.setFont(new Font("Arial", Font.PLAIN, Setting.CELL_SIZE - 10));
         JLabel lDown = new JLabel("Вниз");
-        lSize.setFont(new Font("Arial", Font.ROMAN_BASELINE, Setting.CELL_SIZE - 10));
+        lSize.setFont(new Font("Arial", Font.PLAIN, Setting.CELL_SIZE - 10));
         JLabel lLeft = new JLabel("Влево");
-        lSize.setFont(new Font("Arial", Font.ROMAN_BASELINE, Setting.CELL_SIZE - 10));
+        lSize.setFont(new Font("Arial", Font.PLAIN, Setting.CELL_SIZE - 10));
         JLabel lRight = new JLabel("Вправо");
-        lSize.setFont(new Font("Arial", Font.ROMAN_BASELINE, Setting.CELL_SIZE - 10));
+        lSize.setFont(new Font("Arial", Font.PLAIN, Setting.CELL_SIZE - 10));
         final JTextField up = new JTextField(4);
         up.setText(KeyEvent.getKeyText(keyU));
         final JTextField down = new JTextField(4);
@@ -159,6 +155,7 @@ public class SettDialog extends JDialog {
                 super.mouseClicked(e);
                 up.setText("");
             }
+
             @Override
             public void mouseExited(MouseEvent e) {
                 super.mouseExited(e);
@@ -171,9 +168,9 @@ public class SettDialog extends JDialog {
             public void keyPressed(KeyEvent e) {
                 super.keyTyped(e);
                 int key = e.getKeyCode();
-                if(key != 27 && key != 525 && key != 524 && key != 80 && key != 78 && key != 32){
+                if (key != 27 && key != 525 && key != 524 && key != 80 && key != 78 && key != 32) {
                     keyU = key;
-                }else{
+                } else {
                     up.setText(KeyEvent.getKeyText(keyU));
                 }
             }
@@ -185,6 +182,7 @@ public class SettDialog extends JDialog {
                 super.mouseClicked(e);
                 down.setText("");
             }
+
             @Override
             public void mouseExited(MouseEvent e) {
                 super.mouseExited(e);
@@ -197,9 +195,9 @@ public class SettDialog extends JDialog {
             public void keyPressed(KeyEvent e) {
                 super.keyTyped(e);
                 int key = e.getKeyCode();
-                if(key != 27 && key != 525 && key != 524 && key != 80 && key != 78 && key != 32){
+                if (key != 27 && key != 525 && key != 524 && key != 80 && key != 78 && key != 32) {
                     keyD = key;
-                }else{
+                } else {
                     down.setText(KeyEvent.getKeyText(keyD));
                 }
             }
@@ -211,6 +209,7 @@ public class SettDialog extends JDialog {
                 super.mouseClicked(e);
                 left.setText("");
             }
+
             @Override
             public void mouseExited(MouseEvent e) {
                 super.mouseExited(e);
@@ -223,9 +222,9 @@ public class SettDialog extends JDialog {
             public void keyPressed(KeyEvent e) {
                 super.keyTyped(e);
                 int key = e.getKeyCode();
-                if(key != 27 && key != 525 && key != 524 && key != 80 && key != 78 && key != 32){
+                if (key != 27 && key != 525 && key != 524 && key != 80 && key != 78 && key != 32) {
                     keyL = key;
-                }else{
+                } else {
                     left.setText(KeyEvent.getKeyText(keyL));
                 }
             }
@@ -237,6 +236,7 @@ public class SettDialog extends JDialog {
                 super.mouseClicked(e);
                 right.setText("");
             }
+
             @Override
             public void mouseExited(MouseEvent e) {
                 super.mouseExited(e);
@@ -249,9 +249,9 @@ public class SettDialog extends JDialog {
             public void keyPressed(KeyEvent e) {
                 super.keyTyped(e);
                 int key = e.getKeyCode();
-                if(key != 27 && key != 525 && key != 524 && key != 80 && key != 78 && key != 32){
+                if (key != 27 && key != 525 && key != 524 && key != 80 && key != 78 && key != 32) {
                     keyR = key;
-                }else{
+                } else {
                     right.setText(KeyEvent.getKeyText(keyR));
                 }
             }
@@ -261,10 +261,10 @@ public class SettDialog extends JDialog {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Setting.playSound = sound;
-                if(!sound){
+                if (!sound) {
                     CreateGame.music.stopThread();
                     CreateGame.music = null;
-                }else{
+                } else {
                     CreateGame.playMusic(1);
                 }
                 Setting.keyUP = keyU;
@@ -272,7 +272,7 @@ public class SettDialog extends JDialog {
                 Setting.keyLEFT = keyL;
                 Setting.keyRIGHT = keyR;
                 dispose();
-                if(Setting.CELL_SIZE != Setting.lsSize.get(chSize.getSelectedIndex())) {
+                if (Setting.CELL_SIZE != Setting.lsSize.get(chSize.getSelectedIndex())) {
                     Setting.CELL_SIZE = Setting.lsSize.get(chSize.getSelectedIndex());
                     CreateGame.createNewFrame();
                 }

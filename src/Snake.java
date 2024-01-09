@@ -2,20 +2,20 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 
-public class Snake implements Serializable{
-    private ArrayList<BodyPart> body;
+public class Snake implements Serializable {
+    private final ArrayList<BodyPart> body;
     private Direction direction;
     private long speed;
     public long lastUpdate;
 
-    public Snake(int x, int y, Direction direction, int kol){
+    public Snake(int x, int y, Direction direction, int kol) {
         this.direction = direction;
-        speed = 300000000 - (40000000 * CreateGame.getCurrLvl());
-        if(speed < 50000000){
+        speed = 300000000 - (40000000L * CreateGame.getCurrLvl());
+        if (speed < 50000000) {
             speed = 50000000;
         }
         body = new ArrayList<BodyPart>();
-        for(int i = 0; i < kol; i++) {
+        for (int i = 0; i < kol; i++) {
             body.add(new BodyPart(x - direction.getX() * i, y - direction.getY() * i));
         }
     }
@@ -47,11 +47,11 @@ public class Snake implements Serializable{
         this.direction = direction;
     }
 
-    public long getSpeed(){
+    public long getSpeed() {
         return speed;
     }
 
-    public void setSpeed(long speed){
+    public void setSpeed(long speed) {
         this.speed = speed;
     }
 

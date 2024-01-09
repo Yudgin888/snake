@@ -1,0 +1,8 @@
+javaw -jar Snake.jar
+
+1. File -> Project Structure -> Artifacts -> Add
+- Output directory: out/artifacts
+- Use Existing Manifest: META-INF/MANIFEST.MF
+- Directory Content
+2. Build -> Build Project
+3. Build -> Build Artifacts

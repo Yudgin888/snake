@@ -5,14 +5,13 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class CanvasGame extends Canvas implements Runnable {
     private Thread gameThread;
-    private AtomicBoolean running;
-    private Input input;
+    private final AtomicBoolean running;
+    private final Input input;
     private SuperScene scene;
     public boolean update;
 
 
-
-    public CanvasGame(Dimension size){
+    public CanvasGame(Dimension size) {
         running = new AtomicBoolean(false);
         update = true;
         setSize(size);
@@ -21,13 +20,14 @@ public class CanvasGame extends Canvas implements Runnable {
         addFocusListener(new FocusListener() {
             @Override
             public void focusGained(FocusEvent event) {
-                if(scene instanceof Scene){
+                if (scene instanceof Scene) {
                     CreateGame.getGame().sceneStart();
                 }
             }
+
             @Override
             public void focusLost(FocusEvent event) {
-                if(scene instanceof Scene){
+                if (scene instanceof Scene) {
                     CreateGame.getGame().scenePause();
                 }
             }
@@ -42,11 +42,11 @@ public class CanvasGame extends Canvas implements Runnable {
         addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
-                if((scene instanceof Scene) && (e.getKeyCode() == 80 || e.getKeyCode() == 32) && update){
+                if ((scene instanceof Scene) && (e.getKeyCode() == 80 || e.getKeyCode() == 32) && update) {
                     CreateGame.getGame().scenePause();
                     return;
                 }
-                if(!update){
+                if (!update) {
                     CreateGame.getGame().sceneStart();
                     input.getKeyEvents();
                 }
@@ -54,18 +54,18 @@ public class CanvasGame extends Canvas implements Runnable {
         });
     }
 
-    public void start(){
-        if(running.compareAndSet(false, true)){
+    public void start() {
+        if (running.compareAndSet(false, true)) {
             gameThread = new Thread(this);
             gameThread.start();
         }
     }
 
-    public void stop(){
-        if(running.compareAndSet(true, false)){
-            try{
+    public void stop() {
+        if (running.compareAndSet(true, false)) {
+            try {
                 gameThread.join();
-            }catch (InterruptedException ex){
+            } catch (InterruptedException ex) {
                 throw new RuntimeException(ex);
             }
         }
@@ -75,8 +75,8 @@ public class CanvasGame extends Canvas implements Runnable {
         update = false;
     }
 
-    public void sceneStart(){
-        if(scene instanceof Scene) {
+    public void sceneStart() {
+        if (scene instanceof Scene) {
             Scene sc = (Scene) scene;
             if (sc.getFruit() != null) {
                 sc.getFruit().lastUpdate = System.nanoTime();
@@ -86,31 +86,36 @@ public class CanvasGame extends Canvas implements Runnable {
         update = true;
     }
 
-    public Dimension getScreenSize(){
+    public Dimension getScreenSize() {
         return this.getSize();
     }
 
-    public Input getInput(){
+    public Input getInput() {
         return this.input;
     }
 
-    public void setScene(SuperScene scene){
+    public void setScene(SuperScene scene) {
         this.scene = scene;
     }
 
-    public void run(){
-        while(running.get()){
-            if(scene == null){
+    public void run() {
+        while (running.get()) {
+            if (scene == null) {
                 continue;
             }
-            if(update) {
+            if (update) {
                 long now = System.nanoTime();
                 scene.update(now);
             }
-            Graphics2D g2d = (Graphics2D)getBufferStrategy().getDrawGraphics();
+            Graphics2D g2d = (Graphics2D) getBufferStrategy().getDrawGraphics();
             scene.draw(g2d);
             getBufferStrategy().show();
+
+            try {
+                Thread.sleep(20);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
-
 }

@@ -4,7 +4,7 @@ import java.io.Serializable;
  * Created by Yudgin on 22.11.2014.
  */
 
-public class Stone implements Serializable{
+public class Stone implements Serializable {
     private int x;
     private int y;
     public long lastUpdate;
@@ -19,11 +19,12 @@ public class Stone implements Serializable{
         blink = false;
     }
 
-    public Stone(Stone s){
+    public Stone(Stone s) {
         this.x = s.x;
         this.y = s.y;
         this.paint = s.paint;
         this.blink = s.blink;
+        this.lastUpdate = s.lastUpdate;
     }
 
     public int getX() {

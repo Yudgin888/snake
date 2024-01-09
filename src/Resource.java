@@ -43,117 +43,134 @@ public class Resource {
     public static String s_ston;
     public static String[] playList = null;
 
+    static String imagesPath = "Resource" + File.separator + "images";
+
+    static String soundPath = "Resource" + File.separator + "sounds";
+
 
     Resource() throws Exception {
-        fruit = new ArrayList<BufferedImage>();
+        fruit = new ArrayList<>();
         load();
     }
 
     public void load() throws Exception {
-        File file = new File("Resource\\images\\icon.png");
+        File file = new File(imagesPath + File.separator + "icon.png");
         icon = ImageIO.read(file);
-        file = new File("Resource\\images\\tool.png");
+        file = new File(imagesPath + File.separator + "tool.png");
         iconSett = ImageIO.read(file);
-        file = new File("Resource\\images\\h.png");
+        file = new File(imagesPath + File.separator + "h.png");
         h = ImageIO.read(file);
-        file = new File("Resource\\images\\ouch.png");
+        file = new File(imagesPath + File.separator + "ouch.png");
         ouch = ImageIO.read(file);
-        file = new File("Resource\\images\\exit.png");
+        file = new File(imagesPath + File.separator + "exit.png");
         exit = ImageIO.read(file);
-        file = new File("Resource\\images\\speed.png");
+        file = new File(imagesPath + File.separator + "speed.png");
         speed = ImageIO.read(file);
-        file = new File("Resource\\images\\cl.png");
+        file = new File(imagesPath + File.separator + "cl.png");
         cl = ImageIO.read(file);
-        file = new File("Resource\\images\\pause.jpg");
+        file = new File(imagesPath + File.separator + "pause.jpg");
         pause = ImageIO.read(file);
-        file = new File("Resource\\images\\bGround_lvl1.jpg");
+        file = new File(imagesPath + File.separator + "bGround_lvl1.jpg");
         bGround1 = ImageIO.read(file);
-        file = new File("Resource\\images\\bGroundFaq.jpg");
+        file = new File(imagesPath + File.separator + "bGroundFaq.jpg");
         bGroundFaq = ImageIO.read(file);
-        file = new File("Resource\\images\\bGround_mm.jpg");
+        file = new File(imagesPath + File.separator + "bGround_mm.jpg");
         bGroundmm = ImageIO.read(file);
-        file = new File("Resource\\images\\bGroundOv.jpg");
+        file = new File(imagesPath + File.separator + "bGroundOv.jpg");
         bGroundOv = ImageIO.read(file);
-        file = new File("Resource\\images\\bGround_set.jpg");
+        file = new File(imagesPath + File.separator + "bGround_set.jpg");
         bGroundset = ImageIO.read(file);
-        file = new File("Resource\\images\\bFin.jpg");
+        file = new File(imagesPath + File.separator + "bFin.jpg");
         bFin = ImageIO.read(file);
-        file = new File("Resource\\images\\briefing.jpg");
+        file = new File(imagesPath + File.separator + "briefing.jpg");
         briefing = ImageIO.read(file);
-        file = new File("Resource\\images\\game_over.jpg");
+        file = new File(imagesPath + File.separator + "game_over.jpg");
         gameOver = ImageIO.read(file);
-        file = new File("Resource\\images\\board.jpg");
+        file = new File(imagesPath + File.separator + "board.jpg");
         board = ImageIO.read(file);
-        file = new File("Resource\\images\\head0.png");
+        file = new File(imagesPath + File.separator + "head0.png");
         head0 = ImageIO.read(file);
-        file = new File("Resource\\images\\head180.png");
+        file = new File(imagesPath + File.separator + "head180.png");
         head180 = ImageIO.read(file);
-        file = new File("Resource\\images\\headA0.png");
+        file = new File(imagesPath + File.separator + "headA0.png");
         headA0 = ImageIO.read(file);
-        file = new File("Resource\\images\\headA180.png");
+        file = new File(imagesPath + File.separator + "headA180.png");
         headA180 = ImageIO.read(file);
-        file = new File("Resource\\images\\body.png");
+        file = new File(imagesPath + File.separator + "body.png");
         body = ImageIO.read(file);
-        file = new File("Resource\\images\\body2.png");
+        file = new File(imagesPath + File.separator + "body2.png");
         body2 = ImageIO.read(file);
-        file = new File("Resource\\images\\rec.png");
+        file = new File(imagesPath + File.separator + "rec.png");
         rec = ImageIO.read(file);
-        file = new File("Resource\\images\\faq.png");
+        file = new File(imagesPath + File.separator + "faq.png");
         faq = ImageIO.read(file);
-        file = new File("Resource\\images\\apple.png");
+        file = new File(imagesPath + File.separator + "apple.png");
         fruit.add(ImageIO.read(file));
-        file = new File("Resource\\images\\two_apples.png");
+        file = new File(imagesPath + File.separator + "two_apples.png");
         fruit.add(ImageIO.read(file));
-        file = new File("Resource\\images\\banana.png");
+        file = new File(imagesPath + File.separator + "banana.png");
         fruit.add(ImageIO.read(file));
-        file = new File("Resource\\images\\stone.png");
+        file = new File(imagesPath + File.separator + "stone.png");
         stone = ImageIO.read(file);
-        file = new File("Resource\\images\\startButton.png");
+        file = new File(imagesPath + File.separator + "startButton.png");
         startBut = ImageIO.read(file);
-        file = new File("Resource\\images\\contButton.png");
+        file = new File(imagesPath + File.separator + "contButton.png");
         continueBut = ImageIO.read(file);
-        file = new File("Resource\\images\\settingButton.png");
+        file = new File(imagesPath + File.separator + "settingButton.png");
         settingBut = ImageIO.read(file);
-        file = new File("Resource\\images\\exitButton.png");
+        file = new File(imagesPath + File.separator + "exitButton.png");
         exitBut = ImageIO.read(file);
 
-        file = new File("Resource\\sounds\\~MainTheme.wav");
-        if(file.exists()) {
-            s_mainTheme = "Resource\\sounds\\~MainTheme.wav";
-        }else{ s_mainTheme = null; }
-        file = new File("Resource\\sounds\\~finish.wav");
-        if(file.exists()) {
-            s_finish = "Resource\\sounds\\~finish.wav";
-        }else{ s_finish = null; }
-        file = new File("Resource\\sounds\\~game_over.wav");
-        if(file.exists()) {
-            s_gameOv = "Resource\\sounds\\~game_over.wav";
-        }else{ s_gameOv = null; }
-        file = new File("Resource\\sounds\\~potion_1.wav");
-        if(file.exists()) {
-            s_p_1 = "Resource\\sounds\\~potion_1.wav";
-        }else{ s_p_1 = null; }
-        file = new File("Resource\\sounds\\~potion_2.wav");
-        if(file.exists()) {
-            s_p_2 = "Resource\\sounds\\~potion_2.wav";
-        }else{ s_p_2 = null; }
-        file = new File("Resource\\sounds\\~ston.wav");
-        if(file.exists()) {
-            s_ston = "Resource\\sounds\\~ston.wav";
-        }else{ s_ston = null; }
+        file = new File(soundPath + File.separator + "~MainTheme.wav");
+        if (file.exists()) {
+            s_mainTheme = soundPath + File.separator + "~MainTheme.wav";
+        } else {
+            s_mainTheme = null;
+        }
+        file = new File(soundPath + File.separator + "~finish.wav");
+        if (file.exists()) {
+            s_finish = soundPath + File.separator + "~finish.wav";
+        } else {
+            s_finish = null;
+        }
+        file = new File(soundPath + File.separator + "~game_over.wav");
+        if (file.exists()) {
+            s_gameOv = soundPath + File.separator + "~game_over.wav";
+        } else {
+            s_gameOv = null;
+        }
+        file = new File(soundPath + File.separator + "~potion_1.wav");
+        if (file.exists()) {
+            s_p_1 = soundPath + File.separator + "~potion_1.wav";
+        } else {
+            s_p_1 = null;
+        }
+        file = new File(soundPath + File.separator + "~potion_2.wav");
+        if (file.exists()) {
+            s_p_2 = soundPath + File.separator + "~potion_2.wav";
+        } else {
+            s_p_2 = null;
+        }
+        file = new File(soundPath + File.separator + "~ston.wav");
+        if (file.exists()) {
+            s_ston = soundPath + File.separator + "~ston.wav";
+        } else {
+            s_ston = null;
+        }
 
-        file = new File("Resource\\sounds");
-        if(file.exists()) {
+        file = new File(soundPath);
+        if (file.exists()) {
             String[] str = file.list();
-            if(str.length != 0) {
-                ArrayList<String> ls = new ArrayList<String>();
+            assert str != null;
+            if (str.length != 0) {
+                ArrayList<String> ls = new ArrayList<>();
                 for (String s : str) {
                     String[] tmp = s.split("[.]");
                     if (s.charAt(0) != '~' && tmp[tmp.length - 1].compareTo("wav") == 0) {
-                        ls.add("Resource\\sounds\\" + s);
+                        ls.add(soundPath + File.separator + s);
                     }
                 }
-                if(ls.size() != 0) {
+                if (ls.size() != 0) {
                     playList = new String[ls.size()];
                     for (int i = 0; i < ls.size(); i++) {
                         playList[i] = ls.get(i);
@@ -161,6 +178,5 @@ public class Resource {
                 }
             }
         }
-
     }
 }

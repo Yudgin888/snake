@@ -7,7 +7,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 
-public class Scene extends SuperScene implements Serializable{
+public class Scene extends SuperScene implements Serializable {
     private Snake snake;
     private Fruit fruit;
     private double time;
@@ -16,7 +16,7 @@ public class Scene extends SuperScene implements Serializable{
     private boolean setEnd;
     private boolean ouch;
     private int brief;
-    private ArrayList<Stone> lsStone;
+    private final ArrayList<Stone> lsStone;
 
     public Scene() {
         snake = new Snake(2, 2, Direction.RIGHT, 3 + CreateGame.getCurrLvl());
@@ -37,7 +37,7 @@ public class Scene extends SuperScene implements Serializable{
         time += val;
         lastUpdate = now;
 
-        if(isEndScene()){
+        if (isEndScene()) {
             CreateGame.cont = new Continue(this, CreateGame.getCurrLvl(), CreateGame.kolH, CreateGame.kolB, CreateGame.score, CreateGame.time);
             return;
         }
@@ -47,7 +47,7 @@ public class Scene extends SuperScene implements Serializable{
             return;
         }
         processInput();
-        if(ouch && now > snake.lastUpdate + 900000000){
+        if (ouch && now > snake.lastUpdate + 900000000) {
             snake = new Snake(2, 2, Direction.RIGHT, snake.getBody().size());
             ouch = false;
         }
@@ -69,12 +69,12 @@ public class Scene extends SuperScene implements Serializable{
             }
             if (fruit != null) {
                 if (head.getX() == fruit.getX() && head.getY() == fruit.getY()) {
-                    if(fruit.getIncreaseBody() == 2) {
-                        if(Setting.playSound && Resource.s_p_2 != null) {
+                    if (fruit.getIncreaseBody() == 2) {
+                        if (Setting.playSound && Resource.s_p_2 != null) {
                             Sound.play1Sound(Resource.s_p_2);
                         }
-                    }else{
-                        if(Setting.playSound && Resource.s_p_1 != null) {
+                    } else {
+                        if (Setting.playSound && Resource.s_p_1 != null) {
                             Sound.play1Sound(Resource.s_p_1);
                         }
                     }
@@ -101,11 +101,7 @@ public class Scene extends SuperScene implements Serializable{
                 fruit.blink = true;
             }
             if (fruit.blink && (now > fruit.lastUpdate)) {
-                if (fruit.paint) {
-                    fruit.paint = false;
-                } else {
-                    fruit.paint = true;
-                }
+                fruit.paint = !fruit.paint;
             }
             if (fruit.blink && (now > fruit.lastUpdate + 2000000000)) {
                 if (!end) {
@@ -118,7 +114,7 @@ public class Scene extends SuperScene implements Serializable{
 
         Stone s1 = lsStone.get(lsStone.size() - 1);
         Stone s2 = lsStone.get(lsStone.size() - 2);
-        if(!end) {
+        if (!end) {
             s1.lastUpdate = System.nanoTime();
         }
         if (end && !setEnd) {
@@ -134,9 +130,9 @@ public class Scene extends SuperScene implements Serializable{
             }
         }
         if (s1.blink && (now > s1.lastUpdate + 2000000000) && !setEnd) {
-            s1.setX(s1.getX()+1);
+            s1.setX(s1.getX() + 1);
             s1.blink = false;
-            s2.setX(s2.getX()-1);
+            s2.setX(s2.getX() - 1);
             s2.blink = false;
             s1.paint = true;
             s2.paint = true;
@@ -147,36 +143,36 @@ public class Scene extends SuperScene implements Serializable{
 
     @Override
     public void draw(Graphics2D g) {
-        g.drawImage(Resource.bGround1, 0, Setting.CELL_SIZE*2, CreateGame.getGame().getWidth(), CreateGame.getGame().getHeight()-Setting.CELL_SIZE*2, null);
+        g.drawImage(Resource.bGround1, 0, Setting.CELL_SIZE * 2, CreateGame.getGame().getWidth(), CreateGame.getGame().getHeight() - Setting.CELL_SIZE * 2, null);
         drawBoard(g);
         drawFruit(g);
         drawStone(g);
         drawSnake(g);
-        if(!CreateGame.getGame().update){
+        if (!CreateGame.getGame().update) {
             g.drawImage(Resource.pause, Setting.CELL_SIZE * 11, Setting.CELL_SIZE * 8,
                     CreateGame.getFrame().getWidth() - Setting.CELL_SIZE * 22, CreateGame.getFrame().getHeight() - Setting.CELL_SIZE * 16, null);
         }
-        if(brief < 3)
+        if (brief < 3)
             brief++;
-        if(brief == 2) {
+        if (brief == 2) {
             new Briefing();
         }
     }
 
-    private void drawBoard(Graphics2D g){
-        g.drawImage(Resource.board, 0, 0, CreateGame.getGame().getWidth(), Setting.CELL_SIZE*2, null);
-        g.setFont(new Font("Arial", Font.ROMAN_BASELINE, Setting.CELL_SIZE-10));
-        g.drawString("Уровень " + (CreateGame.getCurrLvl()+1), Setting.CELL_SIZE, Setting.CELL_SIZE/2 + (Setting.CELL_SIZE-8));
+    private void drawBoard(Graphics2D g) {
+        g.drawImage(Resource.board, 0, 0, CreateGame.getGame().getWidth(), Setting.CELL_SIZE * 2, null);
+        g.setFont(new Font("Arial", Font.PLAIN, Setting.CELL_SIZE - 10));
+        g.drawString("Уровень " + (CreateGame.getCurrLvl() + 1), Setting.CELL_SIZE, Setting.CELL_SIZE / 2 + (Setting.CELL_SIZE - 8));
 
-        g.setFont(new Font("Arial", Font.ROMAN_BASELINE, Setting.CELL_SIZE-5));
-        g.drawImage(Resource.h, Setting.CELL_SIZE*7, Setting.CELL_SIZE/2, Setting.CELL_SIZE, Setting.CELL_SIZE, null);
-        g.drawString("  x " + CreateGame.kolH, Setting.CELL_SIZE * 8 - (Setting.CELL_SIZE-20), Setting.CELL_SIZE/2 + (Setting.CELL_SIZE-8));
+        g.setFont(new Font("Arial", Font.PLAIN, Setting.CELL_SIZE - 5));
+        g.drawImage(Resource.h, Setting.CELL_SIZE * 7, Setting.CELL_SIZE / 2, Setting.CELL_SIZE, Setting.CELL_SIZE, null);
+        g.drawString("  x " + CreateGame.kolH, Setting.CELL_SIZE * 8 - (Setting.CELL_SIZE - 20), Setting.CELL_SIZE / 2 + (Setting.CELL_SIZE - 8));
 
-        g.drawImage(Resource.fruit.get(1), Setting.CELL_SIZE*11, Setting.CELL_SIZE/2, Setting.CELL_SIZE, Setting.CELL_SIZE, null);
-        g.drawString("  x " + CreateGame.kolB + " / " + (CreateGame.getCurrLvl()*10 + 30), Setting.CELL_SIZE * 12 - (Setting.CELL_SIZE-20), Setting.CELL_SIZE/2 + (Setting.CELL_SIZE-8));
+        g.drawImage(Resource.fruit.get(1), Setting.CELL_SIZE * 11, Setting.CELL_SIZE / 2, Setting.CELL_SIZE, Setting.CELL_SIZE, null);
+        g.drawString("  x " + CreateGame.kolB + " / " + (CreateGame.getCurrLvl() * 10 + 30), Setting.CELL_SIZE * 12 - (Setting.CELL_SIZE - 20), Setting.CELL_SIZE / 2 + (Setting.CELL_SIZE - 8));
 
-        g.drawImage(Resource.cl, Setting.CELL_SIZE*18, Setting.CELL_SIZE/2, Setting.CELL_SIZE, Setting.CELL_SIZE, null);
-        g.drawString("  " + (int)time + " c", Setting.CELL_SIZE * 19 - (Setting.CELL_SIZE-20), Setting.CELL_SIZE/2 + (Setting.CELL_SIZE-8));
+        g.drawImage(Resource.cl, Setting.CELL_SIZE * 18, Setting.CELL_SIZE / 2, Setting.CELL_SIZE, Setting.CELL_SIZE, null);
+        g.drawString("  " + (int) time + " c", Setting.CELL_SIZE * 19 - (Setting.CELL_SIZE - 20), Setting.CELL_SIZE / 2 + (Setting.CELL_SIZE - 8));
     }
 
     private void drawSnake(Graphics2D g) {
@@ -253,14 +249,14 @@ public class Scene extends SuperScene implements Serializable{
                     Setting.CELL_SIZE,
                     Setting.CELL_SIZE, null);
         }
-        if(ouch){
+        if (ouch) {
             g.drawImage(Resource.ouch, p.getX() * Setting.CELL_SIZE - Setting.CELL_SIZE,
-                    CreateGame.getGame().getScreenSize().height - ((p.getY()+1) * Setting.CELL_SIZE), Setting.CELL_SIZE, Setting.CELL_SIZE, null);
+                    CreateGame.getGame().getScreenSize().height - ((p.getY() + 1) * Setting.CELL_SIZE), Setting.CELL_SIZE, Setting.CELL_SIZE, null);
         }
     }
 
     private void drawFruit(Graphics2D g) {
-        if(!end && fruit != null && fruit.paint) {
+        if (!end && fruit != null && fruit.paint) {
             g.drawImage(Resource.fruit.get(fruit.numFruit), fruit.getX() * Setting.CELL_SIZE - Setting.CELL_SIZE,
                     CreateGame.getGame().getScreenSize().height - (fruit.getY() * Setting.CELL_SIZE),
                     Setting.CELL_SIZE,
@@ -268,24 +264,24 @@ public class Scene extends SuperScene implements Serializable{
         }
     }
 
-    private void drawStone(Graphics2D g){
-        for(Stone stone:lsStone) {
-            if(stone.paint) {
+    private void drawStone(Graphics2D g) {
+        for (Stone stone : lsStone) {
+            if (stone.paint) {
                 g.drawImage(Resource.stone, stone.getX() * Setting.CELL_SIZE - Setting.CELL_SIZE,
                         CreateGame.getGame().getScreenSize().height - (stone.getY() * Setting.CELL_SIZE),
                         Setting.CELL_SIZE, Setting.CELL_SIZE, null);
             }
         }
-        Stone s = lsStone.get(lsStone.size()-2);
-        if(!s.paint){
+        Stone s = lsStone.get(lsStone.size() - 2);
+        if (!s.paint) {
             g.drawImage(Resource.exit, s.getX() * Setting.CELL_SIZE - Setting.CELL_SIZE,
                     CreateGame.getGame().getScreenSize().height - (s.getY() * Setting.CELL_SIZE),
-                    Setting.CELL_SIZE*2, Setting.CELL_SIZE, null);
+                    Setting.CELL_SIZE * 2, Setting.CELL_SIZE, null);
         }
-        if(setEnd){
-            g.drawImage(Resource.exit, (s.getX()+1) * Setting.CELL_SIZE - Setting.CELL_SIZE,
+        if (setEnd) {
+            g.drawImage(Resource.exit, (s.getX() + 1) * Setting.CELL_SIZE - Setting.CELL_SIZE,
                     CreateGame.getGame().getScreenSize().height - (s.getY() * Setting.CELL_SIZE),
-                    Setting.CELL_SIZE*2, Setting.CELL_SIZE, null);
+                    Setting.CELL_SIZE * 2, Setting.CELL_SIZE, null);
         }
     }
 
@@ -314,7 +310,7 @@ public class Scene extends SuperScene implements Serializable{
                 return false;
             }
         }
-        for(Stone s:lsStone){
+        for (Stone s : lsStone) {
             if (s.getX() == x && s.getY() == y) {
                 return false;
             }
@@ -336,28 +332,28 @@ public class Scene extends SuperScene implements Serializable{
             if (event.getKeyCode() == Setting.keyLEFT && snake.getDirection() != Direction.RIGHT) {
                 snake.setDirection(Direction.LEFT);
             }
-            if(event.getKeyCode() == 27){
+            if (event.getKeyCode() == 27) {
                 CreateGame.cont = new Continue(this, CreateGame.getCurrLvl(), CreateGame.kolH, CreateGame.kolB, CreateGame.score, CreateGame.time);
                 CreateGame.playMusic(1);
                 CreateGame.getGame().setScene(new MainMenu());
             }
-            if(event.getKeyCode() == 78 && CreateGame.music != null){
+            if (event.getKeyCode() == 78 && CreateGame.music != null) {
                 CreateGame.music.next();
             }
         }
     }
 
-    private boolean isEndScene(){
-        if(CreateGame.getCurrLvl()*10 + 29 < CreateGame.kolB){
+    private boolean isEndScene() {
+        if (CreateGame.getCurrLvl() * 10 + 29 < CreateGame.kolB) {
             end = true;
             Stone s1 = lsStone.get(lsStone.size() - 2);
             Stone s2 = lsStone.get(lsStone.size() - 1);
-            if ((snake.head().getX() == s1.getX()+1 && snake.head().getY() == s1.getY()) || (snake.head().getX() == s2.getX()-1 && snake.head().getY() == s2.getY())) {
+            if ((snake.head().getX() == s1.getX() + 1 && snake.head().getY() == s1.getY()) || (snake.head().getX() == s2.getX() - 1 && snake.head().getY() == s2.getY())) {
                 end = false;
-                if(CreateGame.getCurrLvl() >= CreateGame.getKolLvl()-1) {
+                if (CreateGame.getCurrLvl() >= CreateGame.getKolLvl() - 1) {
                     CreateGame.getGame().setScene(new OverScene(2, calcScore(), time));
                     CreateGame.playMusic(3);
-                }else{
+                } else {
                     CreateGame.getGame().setScene(new OverScene(1, calcScore(), time));
                 }
                 return true;
@@ -366,17 +362,17 @@ public class Scene extends SuperScene implements Serializable{
         return false;
     }
 
-    private int calcScore(){
+    private int calcScore() {
         int x = 0;
-        if(time > 600)
+        if (time > 600)
             x = 3;
-        if(time < 600)
+        if (time < 600)
             x = 2;
-        if(time < 300)
+        if (time < 300)
             x = 1;
-        long speed = ((300000000 - (50000000 * CreateGame.getCurrLvl())) - snake.getSpeed()) / 20000000;
-        double score = (CreateGame.kolB * 200 + CreateGame.kolH * 1000 + (int)speed * 500) / x;
-        return (int)score;
+        long speed = ((300000000 - (50000000L * CreateGame.getCurrLvl())) - snake.getSpeed()) / 20000000;
+        double score = (CreateGame.kolB * 200 + CreateGame.kolH * 1000 + (int) speed * 500) / x;
+        return (int) score;
     }
 
     private boolean isGameOver() {
@@ -385,41 +381,38 @@ public class Scene extends SuperScene implements Serializable{
         }
         for (BodyPart bodyPart : snake.getBody()) {
             if (!ouch && bodyPart != snake.head() && snake.head().getX() == bodyPart.getX() && snake.head().getY() == bodyPart.getY()) {
-                if(Setting.playSound && Resource.s_ston != null) {
+                if (Setting.playSound && Resource.s_ston != null) {
                     Sound.play1Sound(Resource.s_ston);
                 }
                 CreateGame.kolH--;
-                if(CreateGame.kolH > 0) {
+                if (CreateGame.kolH > 0) {
                     ouch = true;
                 }
             }
         }
-        for(Stone s:lsStone){
+        for (Stone s : lsStone) {
             if (!ouch && snake.head().getX() == s.getX() && snake.head().getY() == s.getY()) {
-                if(Setting.playSound && Resource.s_ston != null) {
+                if (Setting.playSound && Resource.s_ston != null) {
                     Sound.play1Sound(Resource.s_ston);
                 }
                 CreateGame.kolH--;
-                if(CreateGame.kolH > 0) {
+                if (CreateGame.kolH > 0) {
                     ouch = true;
                 }
             }
         }
-        if(CreateGame.kolH < 1){
-            return true;
-        }
-        return false;
+        return CreateGame.kolH < 1;
     }
 
 
     public void click(int x, int y) {
     }
 
-    public Fruit getFruit(){
+    public Fruit getFruit() {
         return fruit;
     }
 
-    public Snake getSnake(){
+    public Snake getSnake() {
         return snake;
     }
 

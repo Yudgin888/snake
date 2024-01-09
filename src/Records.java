@@ -16,7 +16,7 @@ public class Records extends JDialog {
         String[] columnNames = {"Имя", "Набрано очков", "Время"};
         CreateGame.sortScore();
         String[][] data;
-        if(CreateGame.lsScore != null) {
+        if (CreateGame.lsScore != null) {
             data = new String[CreateGame.lsScore.size() + 50][3];
             for (int i = 0; i < CreateGame.lsScore.size(); i++) {
                 String[] tmp = CreateGame.lsScore.get(i);
@@ -25,7 +25,7 @@ public class Records extends JDialog {
                 data[i][2] = tmp[2];
             }
 
-        }else{
+        } else {
             data = new String[0][3];
         }
 
@@ -70,7 +70,7 @@ public class Records extends JDialog {
         addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
-                if(e.getKeyCode() == 27){
+                if (e.getKeyCode() == 27) {
                     dispose();
                 }
             }
@@ -78,5 +78,4 @@ public class Records extends JDialog {
         setFocusable(true);
         setVisible(true);
     }
-
 }

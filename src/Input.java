@@ -2,9 +2,9 @@ import java.awt.event.*;
 import java.util.ArrayList;
 
 public class Input implements KeyListener {
-    private ArrayList<KeyEvent> keyEvents;
+    private final ArrayList<KeyEvent> keyEvents;
 
-    public Input(){
+    public Input() {
         keyEvents = new ArrayList<KeyEvent>();
     }
 
@@ -12,7 +12,7 @@ public class Input implements KeyListener {
     public void keyTyped(KeyEvent event) {
     }
 
-    public synchronized void keyPressed(KeyEvent e){
+    public synchronized void keyPressed(KeyEvent e) {
         keyEvents.add(e);
     }
 

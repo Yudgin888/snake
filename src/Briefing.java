@@ -5,16 +5,16 @@ import java.awt.event.*;
 
 public class Briefing extends JDialog {
 
-    Briefing(){
-        super(new JFrame(), "Уровень " + (CreateGame.getCurrLvl()+1), true);
+    Briefing() {
+        super(new JFrame(), "Уровень " + (CreateGame.getCurrLvl() + 1), true);
         setIconImage(Resource.icon);
         setResizable(false);
         setBounds(CreateGame.getFrame().getX() + Setting.CELL_SIZE * 9, CreateGame.getFrame().getY() + Setting.CELL_SIZE * 6,
                 CreateGame.getFrame().getWidth() - Setting.CELL_SIZE * 17, CreateGame.getFrame().getHeight() - Setting.CELL_SIZE * 13);
         setContentPane(new MyPanel(Resource.briefing));
 
-        JLabel label1 = new JLabel("Цель: собрать " + (CreateGame.getCurrLvl()*10 + 30) + " яблок");
-        label1.setFont(new Font("Arial", Font.ROMAN_BASELINE, Setting.CELL_SIZE/2));
+        JLabel label1 = new JLabel("Цель: собрать " + (CreateGame.getCurrLvl() * 10 + 30) + " яблок");
+        label1.setFont(new Font("Arial", Font.PLAIN, Setting.CELL_SIZE / 2));
         JPanel lPan = new JPanel();
         lPan.setOpaque(false);
         lPan.setLayout(new BorderLayout());
@@ -26,10 +26,10 @@ public class Briefing extends JDialog {
         butPan.setOpaque(false);
         butPan.setLayout(new BorderLayout());
         butPan.add(but);
-        butPan.setBorder(BorderFactory.createEmptyBorder(Setting.CELL_SIZE*2, Setting.CELL_SIZE*2, 5, Setting.CELL_SIZE*2));
+        butPan.setBorder(BorderFactory.createEmptyBorder(Setting.CELL_SIZE * 2, Setting.CELL_SIZE * 2, 5, Setting.CELL_SIZE * 2));
 
         JPanel panel = new JPanel();
-        panel.setBorder(BorderFactory.createEmptyBorder(Setting.CELL_SIZE*2, 5, 5, 5));
+        panel.setBorder(BorderFactory.createEmptyBorder(Setting.CELL_SIZE * 2, 5, 5, 5));
         panel.setOpaque(false);
         panel.setLayout(new BorderLayout());
         panel.add(lPan, BorderLayout.CENTER);
@@ -52,7 +52,7 @@ public class Briefing extends JDialog {
         addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
-                if(e.getKeyCode() == 10 || e.getKeyCode() == 27){
+                if (e.getKeyCode() == 10 || e.getKeyCode() == 27) {
                     dispose();
                     CreateGame.getGame().sceneStart();
                 }

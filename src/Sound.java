@@ -3,8 +3,7 @@ import java.io.File;
 import javax.sound.sampled.*;
 
 
-public class Sound implements Runnable{
-    private Thread soundThread;
+public class Sound implements Runnable {
     private boolean running;
     private boolean released;
     private Clip clip;
@@ -14,7 +13,7 @@ public class Sound implements Runnable{
     private int number;
     private boolean method;
     private boolean loop;
-    private String[] playLs;
+    private final String[] playLs;
 
 
     public Sound(String s, boolean loop) {
@@ -24,17 +23,17 @@ public class Sound implements Runnable{
         init(loop);
     }
 
-    public Sound(String s[], boolean loop) {
+    public Sound(String[] s, boolean loop) {
         playLs = s;
-        if(CreateGame.getCurrLvl() >= 0 && CreateGame.getCurrLvl() <= Resource.playList.length){
+        if (CreateGame.getCurrLvl() >= 0 && CreateGame.getCurrLvl() <= Resource.playList.length) {
             number = CreateGame.getCurrLvl();
-        }else{
+        } else {
             number = 0;
         }
         init(loop);
     }
 
-    private void init(boolean loop){
+    private void init(boolean loop) {
         running = true;
         released = false;
         clip = null;
@@ -45,25 +44,25 @@ public class Sound implements Runnable{
         this.loop = loop;
     }
 
-    public void startThread(){
-        soundThread = new Thread(this);
+    public void startThread() {
+        Thread soundThread = new Thread(this);
         soundThread.start();
     }
 
-    public void stopThread(){
+    public void stopThread() {
         running = false;
         playing = false;
         stop();
-        if(clip != null) {
+        if (clip != null) {
             clip.close();
         }
     }
 
     public void run() {
-        while(running) {
+        while (running) {
             playing = true;
-            while(playing){
-                if(number > playLs.length - 1){
+            while (playing) {
+                if (number > playLs.length - 1) {
                     number = 0;
                 }
                 load(playLs[number]);
@@ -71,24 +70,24 @@ public class Sound implements Runnable{
                 join();
             }
             number++;
-            if(!loop){
+            if (!loop) {
                 stopThread();
             }
         }
     }
 
-    private void load(String s){
+    private void load(String s) {
         try {
             File f = new File(s);
             AudioInputStream stream = AudioSystem.getAudioInputStream(f);
             clip = AudioSystem.getClip();
             clip.open(stream);
             clip.addLineListener(new Listener());
-            volumeC = (FloatControl)clip.getControl(FloatControl.Type.MASTER_GAIN);
+            volumeC = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
             released = true;
-            setVolume((float)0.8);
+            setVolume((float) 0.8);
             stream.close();
-        } catch(Exception exc) {
+        } catch (Exception exc) {
             released = false;
         }
     }
@@ -100,8 +99,8 @@ public class Sound implements Runnable{
         }
     }
 
-    public void pause(){
-        if(playing && clip != null){
+    public void pause() {
+        if (playing && clip != null) {
             clip.stop();
             method = true;
             position = clip.getFramePosition();
@@ -117,8 +116,8 @@ public class Sound implements Runnable{
         }
     }
 
-    public void next(){
-        if(playLs.length > 1){
+    public void next() {
+        if (playLs.length > 1) {
             clip.stop();
         }
     }
@@ -135,14 +134,14 @@ public class Sound implements Runnable{
         float v = volumeC.getValue();
         float min = volumeC.getMinimum();
         float max = volumeC.getMaximum();
-        return (v-min) / (max-min);
+        return (v - min) / (max - min);
     }
 
-    public void setPosition(int pos){
+    public void setPosition(int pos) {
         position = pos;
     }
 
-    public int getPosition(){
+    public int getPosition() {
         return position;
     }
 
@@ -150,12 +149,12 @@ public class Sound implements Runnable{
         if (!released) {
             return;
         }
-        synchronized(clip) {
+        synchronized (clip) {
             try {
                 while (playing) {
                     clip.wait();
                 }
-            } catch (InterruptedException exc){
+            } catch (InterruptedException ignored) {
             }
         }
     }
@@ -168,9 +167,9 @@ public class Sound implements Runnable{
     private class Listener implements LineListener {
         public void update(LineEvent ev) {
             if (ev.getType() == LineEvent.Type.STOP) {
-                synchronized(clip) {
+                synchronized (clip) {
                     clip.notify();
-                    if(!method){
+                    if (!method) {
                         playing = false;
                     }
                     method = false;
